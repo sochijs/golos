@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js"
+    "server": "nodemon app.js",
+    "client": "cd client; yarn start",
+    "dev": "concurrently \"yarn server\" \"yarn client\""
   },
   "keywords": [],
   "author": "Sergey Startsev <sergey@webstartsev.ru>",
