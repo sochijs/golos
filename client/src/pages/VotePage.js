@@ -1,7 +1,33 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useHttp} from '../hooks/http.hook';
+import {useParams} from 'react-router';
+import {VoteCard} from '../components/VoteCard';
 
 export const VotePage = () => {
+  const {loading, request} = useHttp();
+  const voteId = useParams().id;
+  const [vote, setVote] = useState(null);
+
+  const getVote = useCallback(async () => {
+    try {
+      const fetched = await request(`/api/vote/${voteId}`, 'GET');
+      setVote(fetched);
+    } catch (e) {
+    }
+
+  }, [request, voteId]);
+
+  useEffect(() => {
+    getVote();
+  }, [getVote]);
+
+  if (loading) {
+    return 'Loading...';
+  }
+
   return (
-    <div><h1>Vote Page</h1></div>
+    <>
+      {!loading && vote && <VoteCard vote={vote}/>}
+    </>
   );
 };
