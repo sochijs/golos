@@ -2,16 +2,21 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {useParams} from 'react-router';
 import {VoteCard} from '../components/VoteCard';
+import {PoolCard} from '../components/PoolCard';
 
 export const VotePage = () => {
   const {loading, request} = useHttp();
   const voteId = useParams().id;
   const [vote, setVote] = useState(null);
+  const [userVoted, setUserVoted] = useState(false);
+  const [userAnswer, setUserAnswer] = useState(null);
 
   const getVote = useCallback(async () => {
     try {
-      const fetched = await request(`/api/vote/${voteId}`, 'GET');
-      setVote(fetched);
+      const {vote, isVoted, userAnswerId} = await request(`/api/vote/${voteId}`, 'GET');
+      setVote(vote);
+      setUserVoted(isVoted);
+      setUserAnswer(userAnswerId);
     } catch (e) {
     }
 
@@ -25,14 +30,20 @@ export const VotePage = () => {
     return 'Loading...';
   }
 
-  const onSelectAnswerHandler = (voteId, answerId) => {
-    console.log('voteId', voteId);
-    console.log('answerId', answerId);
+  const onSelectAnswerHandler = async (voteId, answerId) => {
+    try {
+      const data = await request('/api/vote/choice', 'POST', {voteId, answerId});
+      console.log('data', data);
+      getVote();
+    } catch (e) {
+    }
   };
-
+  console.log('userVoted', userVoted);
   return (
     <>
-      {!loading && vote && <VoteCard vote={vote} onSelectAnswer={onSelectAnswerHandler}/>}
+      {userVoted ?
+        vote && <PoolCard vote={vote} onSelectAnswer={onSelectAnswerHandler}/> :
+        vote && <VoteCard vote={vote} onSelectAnswer={onSelectAnswerHandler}/>}
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import {toDate} from '../utils';
 
-export const VoteCard = ({vote, onSelectAnswer}) => {
+export const PoolCard = ({vote, onSelectAnswer}) => {
   return (
     <div className="row">
       <div className="col s6 offset-s3">
@@ -12,11 +12,17 @@ export const VoteCard = ({vote, onSelectAnswer}) => {
             <div>Дата создания: {toDate(vote.date)}</div>
             <div>Всего голосов: {vote.votes}</div>
           </li>
-          {vote.answers.map(a => (
-            <li className="collection-item" key={a._id} onClick={() => onSelectAnswer(vote._id, a._id)}>
-              {a.answer}
-            </li>
-          ))}
+          {vote.answers.map(a => {
+            const width = 100 * (a.count / vote.votes);
+            return (
+              <li className="collection-item" key={a._id} onClick={() => onSelectAnswer(vote._id, a._id)}>
+                <div className="progress">
+                  <div className="determinate" style={{width: `${width}%`}}/>
+                </div>
+                {a.answer} - {a.count}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
