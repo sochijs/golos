@@ -1,21 +1,21 @@
-const {Schema, model, Types} = require('mongoose');
+const {Schema, model} = require('mongoose');
 
 const schema = new Schema({
   title: {
-      type: String,
-      required: true
-    },
-    expired: {
-      type: Date,
-      required: true
-    },
-    date: {
-      type: Date,
-      default: Date.now
-    },
-    votes: {
-      type: Number,
-      default: 0
+    type: String,
+    required: true
+  },
+  expired: {
+    type: Date,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  votes: {
+    type: Number,
+    default: 0
   },
   answers: [
     {

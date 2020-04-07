@@ -1,10 +1,33 @@
 const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongodb-session')(session);
+
+const ONE_DAY = 1000 * 60 * 60 * 24;
 
 const app = express();
 
+const store = new MongoStore({
+  collection: 'sessions',
+  uri: config.get('mongoUri')
+});
+
 app.use(express.json({extended: true}));
+app.use(session({
+  name: config.get('sessionName'),
+  resave: false,
+  saveUninitialized: false,
+  secret: config.get('sessionSecret'),
+  cookie: {
+    maxAge: ONE_DAY,
+    sameSite: true,
+    secure: false
+  },
+  store
+}));
+
+app.use(require('./middleware/auth'));
 
 app.use('/api/vote', require('./routes/vote.routes'));
 
