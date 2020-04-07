@@ -25,9 +25,14 @@ export const VotePage = () => {
     return 'Loading...';
   }
 
+  const onSelectAnswerHandler = (voteId, answerId) => {
+    console.log('voteId', voteId);
+    console.log('answerId', answerId);
+  };
+
   return (
     <>
-      {!loading && vote && <VoteCard vote={vote}/>}
+      {!loading && vote && <VoteCard vote={vote} onSelectAnswer={onSelectAnswerHandler}/>}
     </>
   );
 };

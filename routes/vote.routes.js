@@ -30,4 +30,20 @@ router.post('/create', async (req, res) => {
   }
 });
 
+router.post('/vote', async (req, res) => {
+  try {
+    const {voteId, answerId} = req.body;
+    const vote = await Vote.findById(voteId);
+
+    const idx = vote.answers.findIndex(a => a._id === answerId);
+    vote.answers[idx].count += 1;
+
+    await vote.save();
+
+    res.status(201).json({vote});
+  } catch (e) {
+    res.status(500).json({message: `Что-то пошло не так, попробуйте еще раз.`, error: e.message});
+  }
+});
+
 module.exports = router;
