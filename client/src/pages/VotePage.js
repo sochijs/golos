@@ -10,6 +10,7 @@ export const VotePage = () => {
   const [vote, setVote] = useState(null);
   const [userVoted, setUserVoted] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
+  const [isDateExpired, setIsDateExpired] = useState(false);
 
   const getVote = useCallback(async () => {
     try {
@@ -17,6 +18,7 @@ export const VotePage = () => {
       setVote(vote);
       setUserVoted(isVoted);
       setUserAnswer(userAnswerId);
+      setIsDateExpired(new Date() >= new Date(vote.expired));
     } catch (e) {
     }
 
@@ -26,24 +28,30 @@ export const VotePage = () => {
     getVote();
   }, [getVote]);
 
-  if (loading) {
-    return 'Loading...';
-  }
-
   const onSelectAnswerHandler = async (voteId, answerId) => {
+    if (userAnswer === answerId) {
+      return false;
+    }
+
     try {
-      const data = await request('/api/vote/choice', 'POST', {voteId, answerId});
-      console.log('data', data);
+      await request('/api/vote/choice', 'POST', {voteId, answerId});
       getVote();
     } catch (e) {
     }
   };
-  console.log('userVoted', userVoted);
+
+  if (loading) {
+    return 'Loading...';
+  }
+
+  if (vote && isDateExpired) {
+    return <PoolCard vote={vote}/>;
+  }
+
   return (
     <>
-      {userVoted ?
-        vote && <PoolCard vote={vote} onSelectAnswer={onSelectAnswerHandler}/> :
-        vote && <VoteCard vote={vote} onSelectAnswer={onSelectAnswerHandler}/>}
+      {!loading && vote &&
+      <VoteCard vote={vote} onSelectAnswer={onSelectAnswerHandler} userVoted={userVoted} userAnswer={userAnswer}/>}
     </>
   );
 };

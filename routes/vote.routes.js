@@ -15,9 +15,6 @@ router.get('/:id', async (req, res) => {
     if (candidate) {
       const idx = candidate.votes.findIndex(v => v.voteId.toString() === voteId.toString());
 
-      console.log('voteId', voteId);
-      console.log('candidate.votes', candidate.votes);
-      console.log('candidate.votes[idx]', candidate.votes[idx]);
       if (idx >= 0) {
         userAnswerId = candidate.votes[idx].answerId;
         isVoted = true;

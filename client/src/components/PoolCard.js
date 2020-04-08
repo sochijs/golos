@@ -1,11 +1,16 @@
 import React from 'react';
 import {toDate} from '../utils';
 
-export const PoolCard = ({vote, onSelectAnswer}) => {
+export const PoolCard = ({vote}) => {
+
+  const maxCount = vote.answers.reduce((acc, answer) => {
+    return answer.count > acc ? answer.count : acc;
+  }, 0);
+
   return (
     <div className="row">
       <div className="col s6 offset-s3">
-        <h1>Сделайте выбор</h1>
+        <h1>Результаты</h1>
         <ul className="collection with-header">
           <li className="collection-header">
             <h4>{vote.title}</h4>
@@ -13,11 +18,12 @@ export const PoolCard = ({vote, onSelectAnswer}) => {
             <div>Всего голосов: {vote.votes}</div>
           </li>
           {vote.answers.map(a => {
-            const width = 100 * (a.count / vote.votes);
+            const width = 100 * (a.count / maxCount);
+            const color = maxCount === a.count ? 'green' : 'blue';
             return (
-              <li className="collection-item" key={a._id} onClick={() => onSelectAnswer(vote._id, a._id)}>
-                <div className="progress">
-                  <div className="determinate" style={{width: `${width}%`}}/>
+              <li className="collection-item" key={a._id}>
+                <div className={`progress ${color} lighten-5`}>
+                  <div className={`determinate ${color}`} style={{width: `${width}%`}}/>
                 </div>
                 {a.answer} - {a.count}
               </li>
