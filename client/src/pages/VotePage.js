@@ -3,6 +3,9 @@ import {useHttp} from '../hooks/http.hook';
 import {useParams} from 'react-router';
 import {VoteCard} from '../components/VoteCard';
 import {PoolCard} from '../components/PoolCard';
+import io from 'socket.io-client';
+
+let socket;
 
 export const VotePage = () => {
   const {loading, request} = useHttp();
@@ -11,6 +14,7 @@ export const VotePage = () => {
   const [userVoted, setUserVoted] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
   const [isDateExpired, setIsDateExpired] = useState(false);
+  const END_POINT = 'http://localhost:5000';
 
   const getVote = useCallback(async () => {
     try {
@@ -25,6 +29,22 @@ export const VotePage = () => {
   }, [request, voteId]);
 
   useEffect(() => {
+    socket = io(END_POINT);
+    socket.emit('join', {voteId});
+    return () => {
+      socket.emit('disconnect');
+      socket.off();
+    };
+  }, [END_POINT, voteId]);
+
+  useEffect(() => {
+    socket.on('userChoice', ({vote}) => {
+      console.log('vote', vote);
+      setVote(vote);
+    });
+  }, [vote]);
+
+  useEffect(() => {
     getVote();
   }, [getVote]);
 
@@ -34,8 +54,13 @@ export const VotePage = () => {
     }
 
     try {
-      await request('/api/vote/choice', 'POST', {voteId, answerId});
-      getVote();
+      const {vote, userAnswerId} = await request('/api/vote/choice', 'POST', {voteId, answerId});
+      setVote(vote);
+      setUserVoted(true);
+      setUserAnswer(userAnswerId);
+      setIsDateExpired(new Date() >= new Date(vote.expired));
+
+      socket.emit('choice', {vote, voteId, userAnswerId});
     } catch (e) {
     }
   };

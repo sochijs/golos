@@ -1,4 +1,5 @@
 const {Router} = require('express');
+
 const Vote = require('../model/Vote');
 const User = require('../model/User');
 const router = Router();
@@ -101,7 +102,7 @@ router.post('/choice', async (req, res) => {
       }
     }
 
-    res.status(201).json({vote});
+    res.status(201).json({vote, userAnswerId: answerId});
   } catch (e) {
     res.status(500).json({message: `Что-то пошло не так, попробуйте еще раз.`, error: e.message});
   }

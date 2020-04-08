@@ -3,5 +3,6 @@
   "mongoUri": "mongodb+srv://sergey:123qwe@cluster0-o8kmy.azure.mongodb.net/test?retryWrites=true&w=majority",
   "baseUrl": "http://localhost:5000",
   "sessionSecret": "same secret value",
-  "sessionName": "sid"
+  "sessionName": "sid",
+  "portWs": 8080
 }
