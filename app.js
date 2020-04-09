@@ -3,16 +3,16 @@ const config = require('config');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
-const socketio = require('socket.io');
 const http = require('http');
 const cors = require('cors');
+const WebSocket = require('ws');
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
 const PORT = config.get('port') || 5000;
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const wss = new WebSocket.Server({port: 8080});
 
 const store = new MongoStore({
   collection: 'sessions',
@@ -50,21 +50,28 @@ async function start() {
       console.log(`App has been started on port ${PORT}...`);
     });
 
-    io.on('connection', (socket) => {
-
-      socket.on('join', ({voteId}) => {
-        console.log('join');
-        socket.join(voteId);
-      });
-
-      socket.on('choice', ({vote, voteId, userAnswerId}, callback) => {
-        io.to(voteId).emit('userChoice', {vote, userAnswerId});
-      });
-
-      socket.on('disconnect', () => {
-        console.log('disconnect');
+    wss.on('connection', (ws) => {
+      ws.on('message', (data) => {
+        const {type, message} = JSON.parse(data);
+        switch (type) {
+          case 'choice':
+            wss.clients.forEach((client) => {
+              if (client !== ws && client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify({
+                  type: 'userChoice',
+                  message: {
+                    vote: message.vote
+                  }
+                }));
+              }
+            });
+            break;
+          default:
+            break;
+        }
       });
     });
+
   } catch (e) {
     console.log('Server error', e.message);
     process.exit(1);
