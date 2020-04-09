@@ -3,10 +3,11 @@ import {nanoid} from 'nanoid';
 import {useHttp} from '../hooks/http.hook';
 import {useHistory} from 'react-router';
 
-function createAnswer(value = '') {
+function createAnswer(value = '', canDelete = false) {
   return {
     answer: value,
-    id: nanoid()
+    id: nanoid(),
+    canDelete
   };
 }
 
@@ -29,7 +30,7 @@ export const CreatePage = () => {
 
   const addAnswerHandler = (evt) => {
     evt.preventDefault();
-    const newAnswer = createAnswer();
+    const newAnswer = createAnswer('', true);
     setAnswers([...answers, newAnswer]);
   };
 
@@ -37,7 +38,7 @@ export const CreatePage = () => {
     evt.preventDefault();
     try {
       // Избавимся от id
-      const copyAnswers = answers.map(a => {
+      const copyAnswers = answers.filter(a => a.answer !== '').map(a => {
         return {
           answer: a.answer
         };
@@ -47,6 +48,11 @@ export const CreatePage = () => {
     } catch (e) {
     }
 
+  };
+
+  const deleteAnswerHandler = (id) => {
+    const copyAnswers = answers.filter(a => a.id !== id);
+    setAnswers(copyAnswers);
   };
 
   return (
@@ -62,7 +68,8 @@ export const CreatePage = () => {
                        name="title"
                        placeholder="Название голосования"
                        value={title}
-                       onChange={(evt) => setTitle(evt.target.value)}/>
+                       onChange={(evt) => setTitle(evt.target.value)}
+                       required/>
                 <label htmlFor="title">Название голосования</label>
               </div>
               {answers.map((a, i) => {
@@ -73,7 +80,10 @@ export const CreatePage = () => {
                            name="a.id"
                            placeholder={`Ответ ${i + 1}`}
                            value={a.answer}
-                           onChange={(evt) => changeAnswerHandler(evt.target.value, a.id)}/>
+                           onChange={(evt) => changeAnswerHandler(evt.target.value, a.id)}
+                           required/>
+                    {a.canDelete &&
+                    <i className="material-icons delete-answer" onClick={() => deleteAnswerHandler(a.id)}>close</i>}
                   </div>
                 );
               })}
