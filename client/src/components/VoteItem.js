@@ -1,8 +1,8 @@
 import React from 'react';
 
-export const VoteItem = ({onSelectAnswer, answer, children}) => {
+export const VoteItem = ({children}) => {
   return (
-    <li className="collection-item" onClick={onSelectAnswer}>
+    <li className="collection-item">
       {children}
     </li>
   );

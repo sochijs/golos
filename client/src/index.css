@@ -12,3 +12,18 @@
     cursor: pointer;
     z-index: 10;
 }
+
+.answer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.choice-answer {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.answer:hover .choice-answer {
+    opacity: 1;
+}

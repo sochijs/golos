@@ -24,19 +24,29 @@ export const VoteCard = ({vote, onSelectAnswer, userVoted, userAnswer}) => {
               const color = userAnswer === answer._id ? 'green' : 'blue';
 
               return (
-                <VoteItem key={answer._id} onSelectAnswer={() => onSelectAnswer(vote._id, answer._id)} answer={answer}
+                <VoteItem key={answer._id} answer={answer}
                           color={color}>
                   <div className={`progress ${color} lighten-5`}>
                     <div className={`determinate ${color}`} style={{width: `${width}%`}}/>
                   </div>
-                  {answer.answer} - {answer.count}
-                  {userAnswer === answer._id && ` - Ваш выбор`}
+                  <div className="answer">
+                    {answer.answer} - {answer.count}
+                    {userAnswer === answer._id ? ` - Ваш выбор` :
+                      <button className="btn right choice-answer"
+                              onClick={() => onSelectAnswer(vote._id, answer._id)}>Сменить
+                        выбор</button>}
+                  </div>
                 </VoteItem>
               );
             } else {
               return (
-                <VoteItem key={answer._id} onSelectAnswer={() => onSelectAnswer(vote._id, answer._id)} answer={answer}>
-                  {answer.answer}
+                <VoteItem key={answer._id} answer={answer}>
+                  <div className="answer">
+                    {answer.answer}
+                    <button className="btn right choice-answer"
+                            onClick={() => onSelectAnswer(vote._id, answer._id)}>Сделать выбор
+                    </button>
+                  </div>
                 </VoteItem>
               );
             }
