@@ -1,0 +1,39 @@
+.Checkbox-input {
+    display: none;
+}
+
+.Checkbox-label {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+
+    font-size: 15px;
+    color: #333
+}
+
+.Checkbox-label_type_radio:before {
+    border-radius: 100%;
+}
+
+.Checkbox-i_radio {
+    border-radius: 100%;
+    margin-right: 1rem;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+
+.Checkbox-i_radio:before {
+    content: '';
+    border-radius: 100%;
+    display: block;
+    height: 100%;
+    padding: 2px;
+    transition: background 0.2s ease;
+    background: transparent;
+}
+
+.Checkbox-input:checked + .Checkbox-label .Checkbox-i_radio:before {
+    background: #27ae60;
+}

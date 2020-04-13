@@ -1,0 +1,47 @@
+.Button {
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #2980b9;
+    border: 1px solid #2980b9;
+    background: transparent;
+}
+
+.Button:hover, .Button:focus {
+    background: #3498db;
+    color: #fff
+}
+
+.Button:active {
+    box-shadow: inset 2px 2px 5px rgba(75, 73, 67, 0.5), 1px 1px 5px rgba(255, 255, 255, 1);
+}
+
+.Button:disabled {
+    background: #ddd !important;
+    cursor: not-allowed;
+    box-shadow: none;
+    border-color: #c4c4c4;
+    color: #fff
+}
+
+.Button_type_abstained:disabled {
+    color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.Button:not(:last-of-type) {
+    margin-right: 1rem;
+}
+
+.Button_type_active {
+    background: #3498db;
+    color: #fff
+}
+
+.Button_type_active:hover, .Button_type_active:focus {
+    background: #2980b9;
+}
+
+
+
+
