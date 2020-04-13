@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <Navbar/>
-      <div className="container">
+      <div className="content">
         {routes}
       </div>
     </Router>

@@ -1,0 +1,26 @@
+.VoteCard {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.VoteCard-header {
+    padding: 24px 20px 0;
+}
+
+.VoteCard-title {
+    margin: 0;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.VoteCard-content {
+    padding: 24px 20px;
+}
+
+.VoteCard-footer {
+    padding: 0 20px 24px;
+}
+
+.Pooling-item {
+    margin-bottom: 1rem;
+}

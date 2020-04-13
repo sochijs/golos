@@ -1,0 +1,45 @@
+.Pooling {
+    margin: 0 0 2rem 0;
+}
+
+.Pooling-count {
+    margin-left: auto;
+    padding-left: 1rem;
+}
+
+.Pooling-input {
+    display: none;
+}
+
+.Pooling-label {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+
+    font-size: 15px;
+    color: #333
+}
+
+.Pooling-i_radio {
+    border-radius: 100%;
+    margin-right: 1rem;
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+
+.Pooling-i_radio:before {
+    content: '';
+    border-radius: 100%;
+    display: block;
+    height: 100%;
+    padding: 2px;
+    transition: background 0.2s ease;
+    background: transparent;
+}
+
+.Pooling-input:checked + .Pooling-label .Pooling-i_radio:before {
+    background: #27ae60;
+}

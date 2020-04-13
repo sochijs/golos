@@ -12,16 +12,18 @@ router.get('/:id', async (req, res) => {
 
     let isVoted = false;
     let userAnswerId = null;
+    let userAbstained = false;
 
     if (candidate) {
       const idx = candidate.votes.findIndex(v => v.voteId.toString() === voteId.toString());
 
       if (idx >= 0) {
         userAnswerId = candidate.votes[idx].answerId;
+        userAbstained = candidate.votes[idx].abstained;
         isVoted = true;
       }
     }
-    res.status(200).json({vote, isVoted, userAnswerId});
+    res.status(200).json({vote, isVoted, userAnswerId, userAbstained});
   } catch (e) {
     res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.', error: e.message});
   }
@@ -48,24 +50,33 @@ router.post('/create', async (req, res) => {
 
 router.post('/choice', async (req, res) => {
   try {
-    const {voteId, answerId} = req.body;
-    const candidate = await User.findOne({userId: req.session.user.sessionId});
-    const vote = await Vote.findById(voteId);
+    const {voteId, answerId, abstained} = req.body;
+
+    let candidate = await User.findOne({userId: req.session.user.sessionId});
+    let vote = await Vote.findById(voteId);
 
     // Человек голосует первый раз
     if (!candidate) {
+
       const user = new User({
         userId: req.session.user.sessionId,
         votes: [{
           voteId,
-          answerId
+          answerId,
+          abstained: true
         }]
       });
+
       await user.save();
 
-      const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
-      vote.answers[voteAnswerIdx].count += 1;
-      vote.votes += 1;
+      if (!abstained) {
+        const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
+        vote.answers[voteAnswerIdx].count += 1;
+        vote.votes += 1;
+      } else {
+        vote.abstained += 1;
+      }
+
       await vote.save();
     } else {
 
@@ -74,15 +85,34 @@ router.post('/choice', async (req, res) => {
         // Голосовал в этом опросе
 
         // Обновляем данные в опросе
-        // Уменьшаем кол-во у старого ответа
-        const oldVoteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === candidate.votes[candidateVoteIdx].answerId.toString());
-        vote.answers[oldVoteAnswerIdx].count -= 1;
-        // Увеличиваем кол-во у нового ответа
-        const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
-        vote.answers[voteAnswerIdx].count += 1;
 
-        // Обновляем данные у пользователя
-        candidate.votes[candidateVoteIdx].answerId = answerId;
+        // За что он голосовал уже
+        if (!candidate.votes[candidateVoteIdx].answerId) { // null = Воздерживался
+          vote.abstained -= 1;
+        } else { // выбирал вариант ответа
+          // Уменьшаем кол-во у старого ответа
+          const oldVoteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === candidate.votes[candidateVoteIdx].answerId.toString());
+          vote.answers[oldVoteAnswerIdx].count -= 1;
+          vote.votes -= 1;
+        }
+
+        if (!abstained) { // Новый голос - вариант ответа
+
+          const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
+          // Увеличиваем кол-во у нового ответа
+          vote.answers[voteAnswerIdx].count += 1;
+
+          // Обновляем данные у пользователя
+          candidate.votes[candidateVoteIdx].answerId = answerId;
+          candidate.votes[candidateVoteIdx].abstained = false;
+          vote.votes += 1;
+
+        } else { // Новый голос - воздерживаюсь
+          vote.abstained += 1;
+          candidate.votes[candidateVoteIdx].answerId = null;
+          candidate.votes[candidateVoteIdx].abstained = true;
+
+        }
 
         await vote.save();
         await candidate.save();
@@ -91,18 +121,24 @@ router.post('/choice', async (req, res) => {
         // Голосует первый раз в опросе
         candidate.votes.push({
           voteId,
-          answerId
+          answerId,
+          abstained
         });
 
-        const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
-        vote.answers[voteAnswerIdx].count += 1;
-        vote.votes += 1;
+        if (!abstained) {
+          const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
+          vote.answers[voteAnswerIdx].count += 1;
+          vote.votes += 1;
+        } else {
+          vote.abstained += 1;
+        }
+
         await vote.save();
         await candidate.save();
       }
     }
 
-    res.status(201).json({vote, userAnswerId: answerId});
+    res.status(201).json({vote, userAnswerId: answerId, userAbstained: abstained});
   } catch (e) {
     res.status(500).json({message: `Что-то пошло не так, попробуйте еще раз.`, error: e.message});
   }
