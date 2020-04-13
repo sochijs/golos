@@ -12,10 +12,8 @@ const schema = new Schema({
         required: true,
         ref: 'Vote'
       },
-      answerId: {
-        type: String,
-        required: true
-      }
+      answerId: String,
+      abstained: Boolean
     }
   ]
 });

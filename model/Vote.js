@@ -17,6 +17,10 @@ const schema = new Schema({
     type: Number,
     default: 0
   },
+  abstained: {
+    type: Number,
+    default: 0
+  },
   answers: [
     {
       answer: {
