@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {useParams} from 'react-router';
 import {VoteCard} from '../components/VoteCard/VoteCard';
-import {PoolCard} from '../components/Results/PoolCard';
+import Results from '../components/Results/Results';
 
 let socket = null;
 
@@ -81,7 +81,7 @@ export const VotePage = () => {
   }
 
   if (vote && isDateExpired) {
-    return <PoolCard vote={vote}/>;
+    return <Results answers={vote.answers} countVotes={vote.votes} userAnswer={userAnswer}/>;
   }
 
   return (

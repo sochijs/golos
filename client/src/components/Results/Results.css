@@ -1,48 +1,48 @@
-.PoolingResult {
+.Result {
     margin: 0 0 2rem 0;
 }
 
-.PoolingResult-item {
+.Result-item {
     margin-bottom: 2rem;
     margin-left: 2rem;
     position: relative;
 }
 
-.PoolingResult-item_win {
+.Result-item_win {
     color: #2980b9;
 }
 
-.PoolingResult-answer {
+.Result-answer {
     display: flex;
     align-items: center;
 }
 
-.PoolingResult-percent {
+.Result-percent {
     min-width: 50px;
 }
 
-.PoolingResult-icon_type_choice {
+.Result-icon_type_choice {
     color: #27ae60;
     margin-left: 0.5rem;
 }
 
-.PoolingResult-count {
+.Result-count {
     margin-left: auto;
     padding-left: 1rem;
 }
 
-.PoolingResult-input {
+.Result-input {
     display: none;
 }
 
-.PoolingResult-label {
+.Result-label {
     display: flex;
-    cursor: pointer;
+    display: flex;
     align-items: center;
     font-size: 15px;
 }
 
-.PoolingResult-i_radio {
+.Result-i_radio {
     border-radius: 100%;
     margin-right: 1rem;
     min-width: 18px;
@@ -55,11 +55,11 @@
     left: -2rem;
 }
 
-.PoolingResult-label_choice {
+.Result-label_choice {
     cursor: default;
 }
 
-.PoolingResult-i_radio:before {
+.Result-i_radio:before {
     content: '';
     border-radius: 100%;
     display: block;
@@ -70,6 +70,6 @@
     box-sizing: border-box;
 }
 
-.PoolingResult-input:checked + .PoolingResult-label .PoolingResult-i_radio:before {
+.Result-input:checked + .Result-label .Result-i_radio:before {
     background: #27ae60;
 }
