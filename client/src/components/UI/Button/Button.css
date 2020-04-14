@@ -16,8 +16,12 @@
     box-shadow: inset 2px 2px 5px rgba(75, 73, 67, 0.5), 1px 1px 5px rgba(255, 255, 255, 1);
 }
 
+.Button_type_active:hover, .Button_type_active:focus {
+    background: #2980b9;
+}
+
 .Button:disabled {
-    background: #ddd !important;
+    background: #ddd;
     cursor: not-allowed;
     box-shadow: none;
     border-color: #c4c4c4;
@@ -25,8 +29,8 @@
 }
 
 .Button_type_abstained:disabled {
-    color: #4CAF50;
-    border-color: #4CAF50;
+    background: #7fc59d;
+    color: #fff;
 }
 
 .Button:not(:last-of-type) {
@@ -38,9 +42,7 @@
     color: #fff
 }
 
-.Button_type_active:hover, .Button_type_active:focus {
-    background: #2980b9;
-}
+
 
 
 

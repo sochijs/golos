@@ -22,6 +22,7 @@ export const VoteCard = ({vote, onChoice, userVoted, userAnswer, userAbstained})
           {userVoted ?
             <PoolingResult
               answers={vote.answers}
+              countVotes={vote.votes}
               onChange={setNewAnswerId}
               newAnswerId={newAnswerId}
               userAnswer={userAnswer}/> :
@@ -37,10 +38,10 @@ export const VoteCard = ({vote, onChoice, userVoted, userAnswer, userAbstained})
               onClick={() => onChoice(vote._id, newAnswerId)}
             >Голосовать</Button>
             {userAbstained ?
-              <Button
-                className="Button_type_abstained"
+              [<Button
                 disabled
-              >Вы воздержались от ответа</Button> :
+              >Вы воздержались от ответа</Button>,
+                <i className="material-icons Pooling-icon_type_choice">check_box</i>] :
               <Button
                 onClick={() => onChoice(vote._id, null, true)}
               >Воздержаться</Button>}

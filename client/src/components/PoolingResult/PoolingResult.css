@@ -1,26 +1,48 @@
-.Pooling {
+.PoolingResult {
     margin: 0 0 2rem 0;
 }
 
-.Pooling-count {
+.PoolingResult-item {
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    position: relative;
+}
+
+.PoolingResult-item_win {
+    color: #2980b9;
+}
+
+.PoolingResult-answer {
+    display: flex;
+    align-items: center;
+}
+
+.PoolingResult-percent {
+    min-width: 50px;
+}
+
+.PoolingResult-icon_type_choice {
+    color: #27ae60;
+    margin-left: 0.5rem;
+}
+
+.PoolingResult-count {
     margin-left: auto;
     padding-left: 1rem;
 }
 
-.Pooling-input {
+.PoolingResult-input {
     display: none;
 }
 
-.Pooling-label {
+.PoolingResult-label {
     display: flex;
     cursor: pointer;
     align-items: center;
-
     font-size: 15px;
-    color: #333
 }
 
-.Pooling-i_radio {
+.PoolingResult-i_radio {
     border-radius: 100%;
     margin-right: 1rem;
     min-width: 18px;
@@ -28,9 +50,16 @@
     height: 18px;
     border: 1px solid #ddd;
     padding: 2px;
+    box-sizing: border-box;
+    position: absolute;
+    left: -2rem;
 }
 
-.Pooling-i_radio:before {
+.PoolingResult-label_choice {
+    cursor: default;
+}
+
+.PoolingResult-i_radio:before {
     content: '';
     border-radius: 100%;
     display: block;
@@ -38,8 +67,9 @@
     padding: 2px;
     transition: background 0.2s ease;
     background: transparent;
+    box-sizing: border-box;
 }
 
-.Pooling-input:checked + .Pooling-label .Pooling-i_radio:before {
+.PoolingResult-input:checked + .PoolingResult-label .PoolingResult-i_radio:before {
     background: #27ae60;
 }

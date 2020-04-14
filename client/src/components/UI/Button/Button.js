@@ -1,6 +1,6 @@
 import React from 'react';
 import './Button.css';
-import classNames from 'classname';
+import classNames from 'classnames';
 
 const Button = ({children, onClick, className, disabled, active}) => {
 
