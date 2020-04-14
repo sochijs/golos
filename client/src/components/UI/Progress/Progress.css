@@ -1,0 +1,28 @@
+.Progress {
+    position: relative;
+    height: 4px;
+    display: block;
+    width: 100%;
+    background-color: rgba(189, 195, 199, 0.3);
+    border-radius: 2px;
+    margin: .5rem 0 1rem 0;
+    overflow: hidden;
+}
+
+.Progress-determinate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #bdc3c7;
+    -webkit-transition: width .3s linear;
+    transition: width .3s linear;
+}
+
+.Progress_win {
+    background-color: rgba(41, 128, 185, 0.2);
+}
+
+.Progress-determinate_win {
+    background-color: #2980b9;
+}
