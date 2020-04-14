@@ -1,0 +1,21 @@
+.Menu {
+    display: flex;
+}
+
+.Menu-link:not(:last-of-type) {
+    margin-right: 2rem;
+}
+
+.Menu-link {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #fff;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.Menu-link_active {
+    background: #1a6da0;
+}
