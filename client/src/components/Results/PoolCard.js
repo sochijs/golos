@@ -1,5 +1,5 @@
 import React from 'react';
-import {toDate} from '../utils';
+import {toDate} from '../../utils';
 
 export const PoolCard = ({vote}) => {
 

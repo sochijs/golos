@@ -1,0 +1,75 @@
+.Repooling {
+    margin: 0 0 2rem 0;
+}
+
+.Repooling-item {
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    position: relative;
+}
+
+.Repooling-item_win {
+    color: #2980b9;
+}
+
+.Repooling-answer {
+    display: flex;
+    align-items: center;
+}
+
+.Repooling-percent {
+    min-width: 50px;
+}
+
+.Repooling-icon {
+    color: #27ae60;
+    margin-left: 0.5rem;
+}
+
+.Repooling-count {
+    margin-left: auto;
+    padding-left: 1rem;
+}
+
+.Repooling-input {
+    display: none;
+}
+
+.Repooling-label {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    font-size: 15px;
+}
+
+.Repooling-i_radio {
+    border-radius: 100%;
+    margin-right: 1rem;
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    padding: 2px;
+    box-sizing: border-box;
+    position: absolute;
+    left: -2rem;
+}
+
+.Repooling-label_choice {
+    cursor: default;
+}
+
+.Repooling-i_radio:before {
+    content: '';
+    border-radius: 100%;
+    display: block;
+    height: 100%;
+    padding: 2px;
+    transition: background 0.2s ease;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.Repooling-input:checked + .Repooling-label .Repooling-i_radio:before {
+    background: #27ae60;
+}

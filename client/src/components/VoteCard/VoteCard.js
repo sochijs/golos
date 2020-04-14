@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {toDate} from '../../utils';
 import Button from '../UI/Button/Button';
-import PoolingResult from '../PoolingResult/PoolingResult';
+import Repooling from '../Repooling/Repooling';
 import Pooling from '../Pooling/Pooling';
 
 import './VoteCard.css';
+import Icon from '../UI/Icon/Icon';
 
 export const VoteCard = ({vote, onChoice, userVoted, userAnswer, userAbstained}) => {
   const [newAnswerId, setNewAnswerId] = useState(null);
+  console.log('userAbstained', userAbstained);
 
   return (
     <>
@@ -20,7 +22,7 @@ export const VoteCard = ({vote, onChoice, userVoted, userAnswer, userAbstained})
         </div>
         <div className="VoteCard-content">
           {userVoted ?
-            <PoolingResult
+            <Repooling
               answers={vote.answers}
               countVotes={vote.votes}
               onChange={setNewAnswerId}
@@ -41,7 +43,7 @@ export const VoteCard = ({vote, onChoice, userVoted, userAnswer, userAbstained})
               [<Button
                 disabled
               >Вы воздержались от ответа</Button>,
-                <i className="material-icons Pooling-icon_type_choice">check_box</i>] :
+                <Icon className="VoteCard-icon">check_box</Icon>] :
               <Button
                 onClick={() => onChoice(vote._id, null, true)}
               >Воздержаться</Button>}

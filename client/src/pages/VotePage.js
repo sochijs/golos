@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {useParams} from 'react-router';
 import {VoteCard} from '../components/VoteCard/VoteCard';
-import {PoolCard} from '../components/PoolCard';
+import {PoolCard} from '../components/Results/PoolCard';
 
 let socket = null;
 
@@ -12,7 +12,7 @@ export const VotePage = () => {
   const [vote, setVote] = useState(null);
   const [userVoted, setUserVoted] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
-  const [userAbstained, setUserAbstained] = useState(null);
+  const [userAbstained, setUserAbstained] = useState(false);
   const [isDateExpired, setIsDateExpired] = useState(false);
   const END_POINT = 'ws://localhost:8080';
 

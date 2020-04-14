@@ -1,9 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 import Progress from '../UI/Progress/Progress';
-import './PoolingResult.css';
+import './Repooling.css';
+import Icon from '../UI/Icon/Icon';
 
-const PoolingResult = ({answers, onChange, countVotes, userAnswer}) => {
+const Repooling = ({answers, onChange, countVotes, userAnswer}) => {
 
   const maxCount = answers.reduce((acc, answer) => {
     return answer.count > acc ? answer.count : acc;
@@ -17,42 +18,42 @@ const PoolingResult = ({answers, onChange, countVotes, userAnswer}) => {
   };
 
   return (
-    <ul className="PoolingResult">
+    <ul className="Repooling">
       {answers.map(answer => {
         const width = 100 * (answer.count / countVotes);
         const percent = width.toFixed(1);
         const classes = classNames(
-          'PoolingResult-item',
-          {'PoolingResult-item_win': maxCount === answer.count}
+          'Repooling-item',
+          {'Repooling-item_win': maxCount === answer.count}
         );
         return (
           <li className={classes} key={answer._id}>
             {userAnswer !== answer._id ?
-              <div className="PoolingResult-answer">
-                <input className="PoolingResult-input"
+              <div className="Repooling-answer">
+                <input className="Repooling-input"
                        type="radio"
                        id={answer._id}
                        name="answer"
                        onChange={() => onChange(answer._id)}/>
                 <label
-                  className="PoolingResult-label"
+                  className="Repooling-label"
                   htmlFor={answer._id}
                   tabIndex="0"
                   onKeyPress={checkedHandler}>
-                  <i className="PoolingResult-i_radio"/>
-                  <span className="PoolingResult-percent">{percent}%</span>
-                  <span className="PoolingResult-answer">{answer.answer}</span>
+                  <i className="Repooling-i_radio"/>
+                  <span className="Repooling-percent">{percent}%</span>
+                  <span className="Repooling-answer">{answer.answer}</span>
                 </label>
-                <span className="PoolingResult-count">{answer.count}</span>
+                <span className="Repooling-count">{answer.count}</span>
               </div> :
-              <div className="PoolingResult-answer">
+              <div className="Repooling-answer">
                 <label
-                  className="PoolingResult-label PoolingResult-label_choice">
-                  <span className="PoolingResult-percent">{percent}%</span>
-                  <span className="PoolingResult-answer">{answer.answer} <i
-                    className="material-icons PoolingResult-icon_type_choice">check_box</i></span>
+                  className="Repooling-label Repooling-label_choice">
+                  <span className="Repooling-percent">{percent}%</span>
+                  <span className="Repooling-answer">{answer.answer} <Icon
+                    className="Repooling-icon">check_box</Icon></span>
                 </label>
-                <span className="PoolingResult-count">{answer.count}</span>
+                <span className="Repooling-count">{answer.count}</span>
               </div>}
 
             <Progress
@@ -66,4 +67,4 @@ const PoolingResult = ({answers, onChange, countVotes, userAnswer}) => {
   );
 };
 
-export default PoolingResult;
+export default Repooling;

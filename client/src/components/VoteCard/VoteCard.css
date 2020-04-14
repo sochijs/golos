@@ -26,3 +26,8 @@
     display: flex;
     align-items: center;
 }
+
+.VoteCard-icon {
+    color: #27ae60;
+    margin-left: 0.5rem;
+}
