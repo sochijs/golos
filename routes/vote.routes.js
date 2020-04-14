@@ -63,7 +63,7 @@ router.post('/choice', async (req, res) => {
         votes: [{
           voteId,
           answerId,
-          abstained: true
+          abstained
         }]
       });
 
