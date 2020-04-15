@@ -11,19 +11,19 @@ router.get('/:id', async (req, res) => {
     const candidate = await User.findOne({userId: req.session.user.sessionId});
 
     let isVoted = false;
-    let userAnswerId = null;
-    let userAbstained = false;
+    let answerId = null;
+    let isAbstained = false;
 
     if (candidate) {
       const idx = candidate.votes.findIndex(v => v.voteId.toString() === voteId.toString());
 
       if (idx >= 0) {
-        userAnswerId = candidate.votes[idx].answerId;
-        userAbstained = candidate.votes[idx].abstained;
+        answerId = candidate.votes[idx].answerId;
+        isAbstained = candidate.votes[idx].abstained;
         isVoted = true;
       }
     }
-    res.status(200).json({vote, isVoted, userAnswerId, userAbstained});
+    res.status(200).json({vote, isVoted, answerId, isAbstained});
   } catch (e) {
     res.status(500).json({message: 'Что-то пошло не так, попробуйте еще раз.', error: e.message});
   }
@@ -50,7 +50,7 @@ router.post('/create', async (req, res) => {
 
 router.post('/choice', async (req, res) => {
   try {
-    const {voteId, answerId, abstained} = req.body;
+    const {voteId, answerId, isAbstained} = req.body;
 
     let candidate = await User.findOne({userId: req.session.user.sessionId});
     let vote = await Vote.findById(voteId);
@@ -63,13 +63,13 @@ router.post('/choice', async (req, res) => {
         votes: [{
           voteId,
           answerId,
-          abstained
+          isAbstained
         }]
       });
 
       await user.save();
 
-      if (!abstained) {
+      if (!isAbstained) {
         const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
         vote.answers[voteAnswerIdx].count += 1;
         vote.votes += 1;
@@ -96,7 +96,7 @@ router.post('/choice', async (req, res) => {
           vote.votes -= 1;
         }
 
-        if (!abstained) { // Новый голос - вариант ответа
+        if (!isAbstained) { // Новый голос - вариант ответа
 
           const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
           // Увеличиваем кол-во у нового ответа
@@ -122,10 +122,10 @@ router.post('/choice', async (req, res) => {
         candidate.votes.push({
           voteId,
           answerId,
-          abstained
+          isAbstained
         });
 
-        if (!abstained) {
+        if (!isAbstained) {
           const voteAnswerIdx = vote.answers.findIndex(a => a._id.toString() === answerId.toString());
           vote.answers[voteAnswerIdx].count += 1;
           vote.votes += 1;
@@ -138,7 +138,7 @@ router.post('/choice', async (req, res) => {
       }
     }
 
-    res.status(201).json({vote, userAnswerId: answerId, userAbstained: abstained});
+    res.status(201).json({vote});
   } catch (e) {
     res.status(500).json({message: `Что-то пошло не так, попробуйте еще раз.`, error: e.message});
   }

@@ -5,6 +5,35 @@ html {
     background: #f7f7f7;
 }
 
+html, body {
+    height: 100%;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.Header {
+    flex: 0;
+}
+
+.content {
+    flex: 1;
+}
+
+.page-title {
+    font-size: 3rem;
+    text-align: center;
+    margin: 0 0 2rem 0;
+}
+
+.Footer {
+    flex: 0;
+}
+
+
 ul {
     margin: 0;
     padding: 0;
@@ -19,39 +48,4 @@ h1, h2, h3, h4, h5 {
     margin: 0 auto;
     max-width: 1280px;
     width: 90%;
-}
-
-@media only screen and (min-width: 993px) {
-    .container {
-        width: 70%;
-    }
-}
-
-
-.nav-wrapper {
-    padding: 0 2rem;
-}
-
-.delete-answer {
-    position: absolute;
-    top: 10px;
-    right: 0;
-    color: #e74c3c;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.answer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.choice-answer {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.answer:hover .choice-answer {
-    opacity: 1;
 }

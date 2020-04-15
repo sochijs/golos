@@ -1,15 +1,35 @@
-import React, {useState} from 'react';
-import {toDate} from '../../utils';
-import Button from '../UI/Button/Button';
+import React from 'react';
 import Repooling from '../Repooling/Repooling';
 import Pooling from '../Pooling/Pooling';
-
+import Results from '../Results/Results';
+import {toDate} from '../../utils/utils';
+import {POOLING_STATE} from '../../utils/consts';
 import './VoteCard.css';
-import Icon from '../UI/Icon/Icon';
 
-export const VoteCard = ({vote, onChoice, userVoted, userAnswer, userAbstained}) => {
-  const [newAnswerId, setNewAnswerId] = useState(null);
-  console.log('userAbstained', userAbstained);
+const VoteCard = ({vote, poolingState, onSubmitChoice, answerId, isAbstained}) => {
+
+  const renderState = () => {
+    switch (poolingState) {
+      case POOLING_STATE.REPOOLING:
+        return (
+          <Repooling
+            voteId={vote._id}
+            answers={vote.answers}
+            countVotes={vote.votes}
+            onSubmitChoice={onSubmitChoice}
+            isAbstained={isAbstained}
+            oldAnswerId={answerId}/>);
+      case POOLING_STATE.RESULTS:
+        return <Results answers={vote.answers} countVotes={vote.votes} userAnswer={answerId}/>;
+      case POOLING_STATE.POOLING:
+      default:
+        return (
+          <Pooling
+            voteId={vote._id}
+            answers={vote.answers}
+            onSubmitChoice={onSubmitChoice}/>);
+    }
+  };
 
   return (
     <>
@@ -21,33 +41,7 @@ export const VoteCard = ({vote, onChoice, userVoted, userAnswer, userAbstained})
           <span className="VoteCard-info VoteCard-info_type_date">Дата создания: {toDate(vote.date)}</span>
         </div>
         <div className="VoteCard-content">
-          {userVoted ?
-            <Repooling
-              answers={vote.answers}
-              countVotes={vote.votes}
-              onChange={setNewAnswerId}
-              newAnswerId={newAnswerId}
-              userAnswer={userAnswer}/> :
-            <Pooling
-              answers={vote.answers}
-              onChange={setNewAnswerId}/>
-          }
-
-          <div className="VoteCard-buttons">
-            <Button
-              className="Button_type_active"
-              disabled={!!!newAnswerId}
-              onClick={() => onChoice(vote._id, newAnswerId)}
-            >Голосовать</Button>
-            {userAbstained ?
-              [<Button
-                disabled
-              >Вы воздержались от ответа</Button>,
-                <Icon className="VoteCard-icon">check_box</Icon>] :
-              <Button
-                onClick={() => onChoice(vote._id, null, true)}
-              >Воздержаться</Button>}
-          </div>
+          {renderState()}
         </div>
         <div className="VoteCard-footer">
           <span className="VoteCard-note">{vote.votes || vote.abstained ?
@@ -59,3 +53,5 @@ export const VoteCard = ({vote, onChoice, userVoted, userAnswer, userAbstained})
     </>
   );
 };
+
+export default VoteCard;
