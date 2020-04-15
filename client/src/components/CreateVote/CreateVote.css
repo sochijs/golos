@@ -1,0 +1,40 @@
+.CreateVote {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fff;
+    max-width: 900px;
+    margin: 0 auto 4rem;
+}
+
+.CreateVote-wrapper {
+    padding: 24px 20px;
+}
+
+.CreateVote-question {
+    margin-bottom: 1rem;
+}
+
+.CreateVote-answers {
+    margin-bottom: 0.5rem;
+}
+
+.CreateVote-required {
+    color: #D43728
+}
+
+.CreateVote-deleteAnswer {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #D43728;
+    margin-left: 1rem;
+}
+
+.CreateVote-content {
+    margin-bottom: 1rem;
+}
+
+.CreateVote-action {
+    display: flex;
+    align-items: center;
+}

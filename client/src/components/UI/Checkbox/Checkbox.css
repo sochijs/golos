@@ -6,9 +6,16 @@
     display: flex;
     cursor: pointer;
     align-items: center;
-
     font-size: 15px;
     color: #333
+}
+
+.Checkbox-label_type_checkbox:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ddd;
+    margin-right: 0.5rem;
 }
 
 .Checkbox-label_type_radio:before {
@@ -37,5 +44,9 @@
 }
 
 .Checkbox-input:checked + .Checkbox-label .Checkbox-i_radio:before {
+    background: #27ae60;
+}
+
+.Checkbox-input:checked + .Checkbox-label:before {
     background: #27ae60;
 }

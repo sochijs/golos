@@ -1,8 +1,9 @@
 .VoteCard {
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-bottom: 4rem;
     background: #fff;
+    max-width: 900px;
+    margin: 0 auto 4rem;
 }
 
 .VoteCard-header {

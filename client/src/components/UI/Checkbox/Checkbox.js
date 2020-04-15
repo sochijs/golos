@@ -3,7 +3,7 @@ import {nanoid} from 'nanoid';
 
 import './Checkbox.css';
 
-const Checkbox = ({type, onChange, children, name}) => {
+const Checkbox = ({type, children, label, ...attrs}) => {
   const id = nanoid();
 
   switch (type) {
@@ -13,11 +13,20 @@ const Checkbox = ({type, onChange, children, name}) => {
           <input className="Checkbox-input"
                  type="radio"
                  id={id}
-                 name={name}
-                 onChange={onChange}/>
-          <label className="Checkbox-label" htmlFor={id}>
+                 {...attrs}/>
+          <label className="Checkbox-label Checkbox-label_type_radio" htmlFor={id}>
             <i className="Checkbox-i_radio"/>
             {children}</label>
+        </span>
+      );
+    case 'checkbox':
+      return (
+        <span className="Checkbox">
+          <input className="Checkbox-input"
+                 type="checkbox"
+                 id={id}
+                 {...attrs}/>
+          {label && <label className="Checkbox-label Checkbox-label_type_checkbox" htmlFor={id}>{label}</label>}
         </span>
       );
     default:

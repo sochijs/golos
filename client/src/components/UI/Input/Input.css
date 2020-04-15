@@ -1,0 +1,48 @@
+.Input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.Input-wrapper {
+    display: flex;
+}
+
+.Input-input {
+    box-sizing: border-box;
+    height: 40px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #EBEBEB;
+}
+
+.Input-label {
+    margin-bottom: 0.5rem;
+}
+
+.Input-required {
+    margin-left: 0.5rem;
+    color: #D43728
+}
+
+.Input-error {
+    margin-top: 5px;
+    color: #D43728;
+    font-size: 12px;
+}
+
+.Input-input_error {
+    border-color: #D43728;
+    background-color: rgba(212, 55, 40, 0.2);
+}
+
+.Input-input[disabled] {
+    cursor: not-allowed;
+}
+
+.Input-input[type="checkbox"],
+.Input-input[type="radio"] {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+}
