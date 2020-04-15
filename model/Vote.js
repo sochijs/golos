@@ -32,7 +32,11 @@ const schema = new Schema({
         default: 0
       }
     }
-  ]
+  ],
+  public: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = model('Vote', schema);

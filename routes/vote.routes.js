@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/create', async (req, res) => {
   try {
-    const {title, answers} = req.body;
+    const {title, answers, isPublic} = req.body;
     const expired = Date.now() + 60 * 60 * 24 * 1000; // + 1 day
 
     const vote = new Vote({
