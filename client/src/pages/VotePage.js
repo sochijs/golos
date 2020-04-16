@@ -4,6 +4,7 @@ import {useParams} from 'react-router';
 import VoteCard from '../components/VoteCard/VoteCard';
 import Loader from '../components/UI/Loader/Loader';
 import {POOLING_STATE} from '../utils/consts';
+import {Helmet} from 'react-helmet';
 
 let socket = null;
 
@@ -32,8 +33,8 @@ export const VotePage = () => {
     try {
       const {vote, isVoted, answerId, isAbstained} = await request(`/api/vote/${voteId}`, 'GET');
 
-      setPoolingState(getCurrentPoolingState(vote.expired, isVoted));
       setVote(vote);
+      setPoolingState(getCurrentPoolingState(vote.expired, isVoted));
       setAnswerId(answerId);
       setIsAbstained(isAbstained);
     } catch (e) {
@@ -78,8 +79,8 @@ export const VotePage = () => {
         isAbstained
       });
 
-      setPoolingState(getCurrentPoolingState(vote.expired, true));
       setVote(vote);
+      setPoolingState(getCurrentPoolingState(vote.expired, true));
       setAnswerId(newAnswerId);
       setIsAbstained(isAbstained);
 
@@ -91,7 +92,25 @@ export const VotePage = () => {
   const renderTitle = (poolingState) => {
     switch (poolingState) {
       case POOLING_STATE.RESULTS:
-        return <div className="page-title">Результаты голосования</div>;
+        return {
+          h1: <div className="page-title">Результаты голосования</div>,
+          title: 'Результаты голосования'
+        };
+      case POOLING_STATE.LOADING:
+        return {
+          h1: null,
+          title: 'Загружаем опрос'
+        };
+      case POOLING_STATE.REPOOLING:
+        return {
+          h1: null,
+          title: `Вопрос: ${vote.title}`
+        };
+      case POOLING_STATE.POOLING:
+        return {
+          h1: null,
+          title: `Вопрос: ${vote.title}`
+        };
       default:
         return null;
     }
@@ -99,7 +118,10 @@ export const VotePage = () => {
 
   return (
     <div className="page">
-      {renderTitle(poolingState)}
+      <Helmet>
+        <title>{renderTitle(poolingState).title}</title>
+      </Helmet>
+      {renderTitle(poolingState).h1}
       {!loading && vote ?
         <VoteCard
           vote={vote}

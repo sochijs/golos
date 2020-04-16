@@ -2,6 +2,7 @@ import React from 'react';
 import {useHttp} from '../hooks/http.hook';
 import {useHistory} from 'react-router';
 import CreateVote from '../components/CreateVote/CreateVote';
+import {Helmet} from 'react-helmet';
 
 export const CreatePage = () => {
   const history = useHistory();
@@ -17,6 +18,9 @@ export const CreatePage = () => {
 
   return (
     <div className="page">
+      <Helmet>
+        <title>Создать опрос</title>
+      </Helmet>
       <h1 className="page-title">Создать опрос</h1>
       <CreateVote onSubmit={onSubmitHandler} loading={loading}/>
     </div>
