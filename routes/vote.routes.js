@@ -5,7 +5,6 @@ const User = require('../model/User');
 const router = Router();
 
 router.get('/', async (req, res) => {
-  console.log(new Date());
   try {
     const votes = await Vote.find({public: true, expired: {$gte: new Date()}});
     res.status(200).json({votes});

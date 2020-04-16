@@ -5,6 +5,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const http = require('http');
 const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
 const WebSocket = require('ws');
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
@@ -20,6 +22,8 @@ const store = new MongoStore({
 });
 
 app.use(cors());
+app.use(helmet());
+app.use(compression());
 app.use(express.json({extended: true}));
 app.use(session({
   name: config.get('sessionName'),
