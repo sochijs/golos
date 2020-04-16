@@ -1,0 +1,10 @@
+.PublicVotes {
+    padding: 24px 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.PublicVotes-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}

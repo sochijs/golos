@@ -1,0 +1,17 @@
+.PublicVote:not(:last-of-type) {
+    margin-bottom: 2rem;
+}
+
+.PublicVote-title {
+    margin-bottom: 0.5rem;
+}
+
+.PublicVote-date {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-top: 0.2rem;
+}
+
+.PublicVote-vote:not(:last-of-type) {
+    margin-right: 1rem;
+}
