@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Checkbox from '../UI/Checkbox/Checkbox';
-import Button from '../UI/Button/Button';
+import Checkbox from '../../UI/Checkbox/Checkbox';
+import Button from '../../UI/Button/Button';
 import './Pooling.css';
 
 const Pooling = ({voteId, answers, onSubmitChoice}) => {

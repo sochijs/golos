@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import classNames from 'classnames';
-import Progress from '../UI/Progress/Progress';
-import Icon from '../UI/Icon/Icon';
-import Button from '../UI/Button/Button';
+import Progress from '../../UI/Progress/Progress';
+import Icon from '../../UI/Icon/Icon';
+import Button from '../../UI/Button/Button';
 import './Repooling.css';
 
 const Repooling = ({voteId, answers, countVotes, oldAnswerId, onSubmitChoice, isAbstained}) => {

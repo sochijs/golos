@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import Progress from '../UI/Progress/Progress';
+import Progress from '../../UI/Progress/Progress';
 import './Results.css';
 
 const Results = ({answers, countVotes, userAnswer}) => {

@@ -1,7 +1,7 @@
 import React from 'react';
-import Repooling from '../Repooling/Repooling';
-import Pooling from '../Pooling/Pooling';
-import Results from '../Results/Results';
+import Repooling from './Repooling/Repooling';
+import Pooling from './Pooling/Pooling';
+import Results from './Results/Results';
 import {toDate} from '../../utils/utils';
 import {POOLING_STATE} from '../../utils/consts';
 import './VoteCard.css';
