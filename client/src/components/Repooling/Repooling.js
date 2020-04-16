@@ -23,7 +23,7 @@ const Repooling = ({voteId, answers, countVotes, oldAnswerId, onSubmitChoice, is
     <>
       <ul className="Repooling">
         {answers.map(answer => {
-          const width = 100 * (answer.count / countVotes);
+          const width = countVotes ? 100 * (answer.count / countVotes) : 0;
           const percent = width.toFixed(1);
           const classes = classNames(
             'Repooling-item',
@@ -74,13 +74,11 @@ const Repooling = ({voteId, answers, countVotes, oldAnswerId, onSubmitChoice, is
           onClick={() => onSubmitChoice(voteId, answerId)}
         >Переголосовать</Button>
         {isAbstained ?
-          [<Button
-            disabled
-          >Вы воздержались от ответа</Button>,
-            <Icon className="VoteCard-icon">check_box</Icon>] :
-          <Button
-            onClick={() => onSubmitChoice(voteId, null, true)}
-          >Воздержаться</Button>}
+          <>
+            <Button disabled>Вы воздержались от ответа</Button>
+            <Icon className="VoteCard-icon">check_box</Icon>
+          </> :
+          <Button onClick={() => onSubmitChoice(voteId, null, true)}>Воздержаться</Button>}
       </div>
     </>
   );
