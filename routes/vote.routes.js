@@ -37,7 +37,8 @@ router.post('/create', async (req, res) => {
     const vote = new Vote({
       title,
       answers,
-      expired
+      expired,
+      public: isPublic
     });
 
     await vote.save();
