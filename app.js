@@ -1,5 +1,6 @@
 const express = require('express');
-const config = require('config');
+const path = require('path');
+const config = require('./config/keys');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
@@ -10,7 +11,7 @@ const compression = require('compression');
 const WebSocket = require('ws');
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
-const PORT = config.get('port') || 5000;
+const PORT = config.port || 5000;
 
 const app = express();
 const server = http.createServer(app);
@@ -18,7 +19,7 @@ const wss = new WebSocket.Server({port: 8080});
 
 const store = new MongoStore({
   collection: 'sessions',
-  uri: config.get('mongoUri')
+  uri: config.mongoUri
 });
 
 app.use(cors());
@@ -26,10 +27,10 @@ app.use(helmet());
 app.use(compression());
 app.use(express.json({extended: true}));
 app.use(session({
-  name: config.get('sessionName'),
+  name: config.sessionName,
   resave: false,
   saveUninitialized: false,
-  secret: config.get('sessionSecret'),
+  secret: config.sessionSecret,
   cookie: {
     maxAge: ONE_DAY,
     sameSite: true,
@@ -42,9 +43,19 @@ app.use(require('./middleware/auth'));
 
 app.use('/api/vote', require('./routes/vote.routes'));
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build/'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(
+      __dirname, 'client', 'build', 'index.html'
+    ));
+  });
+}
+
 async function start() {
   try {
-    await mongoose.connect(config.get('mongoUri'), {
+    await mongoose.connect(config.mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true

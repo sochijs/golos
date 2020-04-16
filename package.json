@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.4",
-    "config": "^3.3.1",
     "connect-mongodb-session": "^2.3.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
