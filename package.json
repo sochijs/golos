@@ -10,9 +10,9 @@
   "scripts": {
     "start": "node app.js",
     "server": "nodemon app.js",
-    "client": "cd client && yarn start",
+    "client": "cd client && npm run start",
     "client-install": "npm install --prefix client",
-    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run client-install && npm run build --prefix client"
   },
   "keywords": [],
