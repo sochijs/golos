@@ -1,6 +1,6 @@
 import React from 'react';
 import {useHttp} from '../hooks/http.hook';
-import {useHistory} from 'react-router';
+import {useHistory} from 'react-router-dom';
 import CreateVote from '../components/CreateVote/CreateVote';
 import {Helmet} from 'react-helmet';
 

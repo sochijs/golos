@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect, Route, Switch} from 'react-router';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import {CreatePage} from './pages/CreatePage';
 import {VotePage} from './pages/VotePage';
 import MainPage from './pages/MainPage';
